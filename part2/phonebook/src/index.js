@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react'
 import ReactDOM from 'react-dom'
-import {Persons, Field, Filter} from './components/Phonebook'
+import {Persons} from './components/Persons'
+import {Filter} from './components/Filter'
+import {PersonForm} from './components/PersonForm'
 import axios from 'axios'
 
 const App = () => {
@@ -17,7 +19,6 @@ const App = () => {
         setPersons(response.data)
         setFilterPersons(response.data)
       })
-      .then(() => console.log("JSON Fetched"))
   }, [])
   
   const handleName = (event) => setNewName(event.target.value)
@@ -48,11 +49,7 @@ const App = () => {
       <h2>Phonebook</h2>
       <Filter newFilter={newFilter} handleFilter={handleFilter} />
       <h2>add a new</h2>
-      <form onSubmit={handlePerson}>
-        <Field name='name' value={newName} handleValue={handleName} />
-        <Field name='number' value={newNumber} handleValue={handleNumber} />
-        <button type="submit">add</button>
-      </form>
+      <PersonForm name={newName} number={newNumber} handlers={{handlePerson, handleName, handleNumber}}/>
       <h2>Numbers</h2>
       <Persons persons={filterPersons} />
     </div>
